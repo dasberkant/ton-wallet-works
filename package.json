@@ -1,0 +1,30 @@
+{
+  "name": "telegram-tonkey-2",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "parcel index.html",
+    "build": "parcel build index.html --dist-dir docs --public-url ./ && copyfiles tonconnect-manifest.json docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dasberkant/tonkey_game.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dasberkant/tonkey_game/issues"
+  },
+  "homepage": "https://github.com/dasberkant/tonkey_game#readme",
+  "description": "",
+  "dependencies": {
+    "@tonconnect/ui": "^2.1.0",
+    "parcel": "^2.14.4",
+    "ton": "^13.9.0"
+  },
+  "devDependencies": {
+    "buffer": "^6.0.3",
+    "copyfiles": "^2.4.1"
+  }
+}
