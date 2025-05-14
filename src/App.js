@@ -44,7 +44,57 @@ export async function App(rootElement) {
 
 */
 
-export function App(rootElement) {
-    console.log('App placeholder initialized. Element:', rootElement);
-    // We will add more here soon.
+import { initializeWalletConnector } from './components/WalletConnector/WalletConnector.js';
+import { initializeMoonMap, updateAreaDisplay } from './components/MoonMap/MoonMap.js';
+import { loadAreas, updateAreaOwner } from './game_logic/areaService.js';
+
+export async function App(appRootElement) {
+    console.log('App initializing...');
+
+    if (!appRootElement) {
+        console.error('App root element not provided. Cannot initialize.');
+        return;
+    }
+
+    // Get the handleSpendAction function from the WalletConnector
+    // This function will be called when a user clicks an area on the map and confirms purchase.
+    const { tonConnectUI, handleSpendAction } = initializeWalletConnector(
+        'tonconnect-button-root',
+        (areaId, buyerAddress) => {
+            // This is the callback executed *after* a successful transaction via WalletConnector
+            console.log(`App: Area ${areaId} purchase confirmed by ${buyerAddress}. Updating game state and UI.`);
+            updateAreaOwner(areaId, buyerAddress); // Update local game state
+            updateAreaDisplay(areaId, buyerAddress); // Update the MoonMap UI
+            // TODO: Persist this change to a backend database
+        }
+    );
+
+    // Load area data
+    const areas = await loadAreas();
+
+    // Setup Moon Map
+    const moonMapContainer = document.getElementById('moon-map-container');
+    if (moonMapContainer) {
+        initializeMoonMap(moonMapContainer, areas, (clickedArea) => {
+            // This callback is invoked when an area is clicked in the map
+            console.log('App: Area clicked in map:', clickedArea);
+
+            if (clickedArea.ownerAddress) {
+                alert(`Area "${clickedArea.name}" is already owned by ${clickedArea.ownerAddress.slice(0,6)}...`);
+                return;
+            }
+
+            if (tonConnectUI.connected) {
+                // Call the handleSpendAction from WalletConnector
+                // It will handle the confirmation and transaction sending
+                handleSpendAction(clickedArea.id, clickedArea.name, clickedArea.cost);
+            } else {
+                alert('Please connect your wallet to buy an area.');
+            }
+        });
+    } else {
+        console.error('Moon map container (moon-map-container) not found.');
+    }
+
+    console.log('App initialized with Moon Map and Wallet Connector.');
 } 

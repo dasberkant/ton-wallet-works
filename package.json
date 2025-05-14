@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dasberkant/tonkey_game.git"
+    "url": "git+https://github.com/dasberkant/ton-wallet-works.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/dasberkant/tonkey_game/issues"
+    "url": "https://github.com/dasberkant/ton-wallet-works/issues"
   },
-  "homepage": "https://github.com/dasberkant/tonkey_game#readme",
+  "homepage": "https://github.com/dasberkant/ton-wallet-works#readme",
   "description": "",
   "dependencies": {
     "@tonconnect/ui": "^2.1.0",
