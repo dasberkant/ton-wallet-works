@@ -16,8 +16,8 @@
   "bugs": {
     "url": "https://github.com/dasberkant/ton-wallet-works/issues"
   },
-  "homepage": "https://github.com/dasberkant/ton-wallet-works#readme",
-  "description": "",
+  "homepage": "https://dasberkant.github.io/ton-wallet-works/",
+  "description": "Tonkey Moon Map Game - prelaunch phase.",
   "dependencies": {
     "@tonconnect/ui": "^2.1.0",
     "parcel": "^2.14.4",

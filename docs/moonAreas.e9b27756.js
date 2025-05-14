@@ -1,0 +1,2 @@
+(0,globalThis.parcelRequire665c.register)("0igxI",function(e,a){e.exports=JSON.parse('[{"id":"crater_alpha","name":"Crater Alpha","description":"A prominent crater on the near side.","rarity":"Common","cost":100,"image":"public/images/areas/crater_alpha.png","ownerAddress":null},{"id":"colony_beta","name":"Colony Beta","description":"The first established human settlement.","rarity":"Rare","cost":500,"image":"public/images/areas/colony_beta.png","ownerAddress":null}]')});
+//# sourceMappingURL=moonAreas.e9b27756.js.map
