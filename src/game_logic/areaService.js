@@ -1,21 +1,30 @@
 // src/game_logic/areaService.js
+import moonAreasDataFromFile from '../data/moonAreas.json'; // Static import
 
-// This will hold the state of moon areas, potentially fetched from a DB or JSON.
+// This will hold the state of moon areas.
 let moonAreasData = [];
 
 /**
- * Loads area data. For now, it imports directly from the JSON file.
- * In the future, this could fetch from a backend API.
+ * Loads area data. Now uses a static import for reliability.
+ * The function remains async to maintain a consistent API, though it behaves synchronously.
  */
 export async function loadAreas() {
     try {
-        // Dynamically import the JSON data
-        const areasModule = await import('../data/moonAreas.json');
-        moonAreasData = areasModule.default; // JSON modules are often imported under `default`
-        console.log('Moon areas loaded:', moonAreasData);
+        moonAreasData = moonAreasDataFromFile;
+        // Ensure that the imported data is an array
+        if (!Array.isArray(moonAreasData)) {
+            console.warn(
+                'Statically imported moonAreas.json data is not an array. Defaulting to empty array. Data received:',
+                moonAreasDataFromFile
+            );
+            moonAreasData = [];
+        }
+        console.log('Moon areas loaded via static import:', moonAreasData);
         return moonAreasData;
     } catch (error) {
-        console.error('Error loading moon areas:', error);
+        // This catch is less likely to be hit with static imports handled by Parcel,
+        // as build would likely fail if JSON is malformed.
+        console.error('Unexpected error processing statically imported moon areas:', error);
         moonAreasData = []; // Fallback to empty array on error
         return [];
     }
@@ -55,5 +64,4 @@ export function updateAreaOwner(areaId, ownerAddress) {
     return false;
 }
 
-// Initialize by loading areas when the service is imported/used.
-// loadAreas(); // Or call this from App.js to control timing 
+// We call loadAreas() from App.js to control initialization timing. 
